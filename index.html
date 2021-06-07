@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div id="mobile" class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button class="btn btn-default"><i id="minus" class="fas fa-minus"></i></button>
+                           <input type="text" id="currentMobileQun" class="form-control text-center" value="1">
+                           <button class="btn btn-default"><i id='plus' class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$ <span id="currentPrize" >1219</span></h5>
+                        <img id="deleteMobile" src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div id="cover" class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button class="btn btn-default"><i id="coverMinus" class="fas fa-minus"></i></button>
+                           <input type="text" id="coverQty" class="form-control text-center" value="1">
+                           <button class="btn btn-default"><i id="coverPlus" class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$ <span id="currentCoverPrize">59</span></h5>
+                        <img id="deleteCover" src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$ <span id="Subtotal">1278</span></h5>
+                        <h5>$0</h5>
+                        <h5>$ <span id="total">1278</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <script>
+      var PlusQuantity = document.getElementById('plus');
+      PlusQuantity.addEventListener('click',function(){
+         document.getElementById('currentMobileQun').value++;
+         prize('currentPrize','currentMobileQun',1219);
+         plusTotal('Subtotal',1219);
+         plusTotal('total',1219);
+      })
+
+      var minusQuantity = document.getElementById('minus');
+      minusQuantity.addEventListener('click',function(){
+         var currentMobileValue = document.getElementById('currentMobileQun');
+         if(currentMobileValue.value < 1){
+            currentMobileValue.value = 1;
+         }
+         currentMobileValue.value--;
+         if(currentMobileValue.value > 0){
+            minusPrize('currentPrize',1219);
+            minusTotal('Subtotal',1219);
+            minusTotal('total',1219);
+         }
+      })
+
+      var plusCover = document.getElementById('coverPlus');
+      plusCover.addEventListener('click',function(){
+         document.getElementById('coverQty').value++;
+         prize('currentCoverPrize','coverQty',59);
+         plusTotal('Subtotal',59);
+         plusTotal('total',59);
+      })
+
+      var minusCover = document.getElementById('coverMinus');
+      minusCover.addEventListener('click',function(){
+         var currentCoverQty = document.getElementById('coverQty');
+         if(currentCoverQty.value < 1){
+            currentCoverQty.value = 1;
+         }
+         currentCoverQty.value--;
+         if(currentCoverQty.value > 0){
+            minusPrize('currentCoverPrize',59);
+            minusTotal('Subtotal',59);
+            minusTotal('total',59);
+         }
+      })
+
+      
+
+      function prize(currentPrize,inputNumber,prizeQun){
+
+         var quantity =  document.getElementById(inputNumber).value;
+         quantity = parseInt(quantity);
+
+         var totalPrize = quantity * prizeQun;
+
+         document.getElementById(currentPrize).innerHTML = totalPrize;
+      }
+
+      function minusPrize(minus,minusPrizeQun){
+
+         var minusPrizeOfIt =  document.getElementById(minus).innerHTML;
+         minusPrizeOfIt = parseInt(minusPrizeOfIt);
+
+         var totalMinusPrize = minusPrizeOfIt - minusPrizeQun;
+
+         document.getElementById(minus).innerHTML = totalMinusPrize;
+      }
+      function plusTotal(id,fixed){
+         var total = document.getElementById(id).innerHTML;
+         total = parseInt(total);
+         var subTotal = total + fixed;
+         document.getElementById(id).innerHTML = subTotal;
+      }
+      function minusTotal(id,minusIt){
+         var subMinusTotal = document.getElementById(id).innerHTML;
+         subMinusTotal = parseInt(subMinusTotal);
+         var minTotal = subMinusTotal - minusIt;
+         document.getElementById(id).innerHTML = minTotal;
+      }
+      
+      var removeMobile = document.getElementById("deleteMobile");
+      removeMobile.addEventListener("click",function(){
+         document.getElementById("mobile").style.display = 'none';
+      })
+      var removeMobile = document.getElementById("deleteCover");
+      removeMobile.addEventListener("click",function(){
+         document.getElementById("cover").style.display = 'none';
+      })
+
+   </script>
+</body>
+
+</html>
